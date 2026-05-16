@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endangered Animals - ESL</title>
+<style>
+body{font-family:Arial;margin:0;background:linear-gradient(to right,#e0f7fa,#e8f5e9)}
+header{background:#2e8b57;color:#fff;text-align:center;padding:25px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;padding:20px}
+
+/* Base Card Styling (Grid View) */
+.card{
+  background:#fff;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 6px 10px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+/* Subtle hover effect for desktop mice */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.card img{width:100%;height:180px;object-fit:cover}
+.content{padding:15px}
+h2{color:#2e8b57;margin-top: 0;}
+ul{font-size:14px;line-height:1.6}
+footer{background:#2e8b57;color:#fff;text-align:center;padding:15px}
+
+/* Dark Backdrop Overlay */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 100;
+}
+
+.backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* DESKTOP GRAND ZOOM CLASS (Split-Screen Modal) */
+.card.zoomed {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75vw; /* Takes up 75% of the desktop window width */
+  max-width: 850px; /* Expands to a beautiful large dashboard size */
+  height: auto;
+  max-height: 85vh;
+  z-index: 101;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+  cursor: default;
+  
+  /* Transforms the card layout into a side-by-side split screen */
+  display: flex; 
+}
+
+/* Left side of the zoomed desktop card */
+.card.zoomed img {
+  width: 50%; /* Image gets exactly half the card */
+  height: auto;
+  min-height: 400px;
+  object-fit: cover;
+}
+
+/* Right side of the zoomed desktop card */
+.card.zoomed .content {
+  width: 50%; /* Text gets the other half */
+  padding: 40px; /* Lots of breathing room */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card.zoomed h2 {
+  font-size: 36px; /* Massive, clear title */
+  margin-bottom: 20px;
+}
+
+.card.zoomed ul {
+  font-size: 18px; /* High legibility reading text */
+  line-height: 1.8;
+}
+</style>
+</head>
+<body>
+
+<div class="backdrop" id="cardBackdrop"></div>
+
+<header>
+<h1>Endangered Animals</h1>
+<p>Simple English for learners</p>
+</header>
+<div class='grid'>
+
+<div class='card'><img src='images/seal.jpeg'><div class='content'><h2>Sea Lion</h2><ul><li>Size: 2–2.5 meters</li><li>Diet: Fish and squid</li><li>Habitat: Ocean coasts</li><li>Special: Very playful</li><li>Threats: Pollution, fishing nets</li></ul></div></div>
+
+<div class='card'><img src='images/elephant.jpeg'><div class='content'><h2>Asian Elephant</h2><ul><li>Size: Up to 3 meters tall</li><li>Diet: Plants</li><li>Habitat: Forests in Asia</li><li>Special: Uses trunk like a hand</li><li>Threats: Habitat loss, poaching</li></ul></div></div>
+
+<div class='card'><img src='images/orangutan.jpeg'><div class='content'><h2>Orangutan</h2><ul><li>Size: 1.2–1.5 meters</li><li>Diet: Fruit and insects</li><li>Habitat: Rainforests</li><li>Special: Very intelligent</li><li>Threats: Deforestation, illegal trade</li></ul></div></div>
+
+<div class='card'><img src='images/leopard.jpeg'><div class='content'><h2>Snow Leopard</h2><ul><li>Size: 1–1.3 meters</li><li>Diet: Meat</li><li>Habitat: Cold mountains</li><li>Special: Thick fur for cold weather</li><li>Threats: Hunting, climate change</li></ul></div></div>
+
+<div class='card'><img src='images/rhino.jpeg'><div class='content'><h2>Black Rhino</h2><ul><li>Size: Up to 1.6 meters tall</li><li>Diet: Plants</li><li>Habitat: Africa</li><li>Special: Strong horn</li><li>Threats: Poaching, habitat loss</li></ul></div></div>
+
+<div class='card'><img src='images/tuna.jpeg'><div class='content'><h2>Bluefin Tuna</h2><ul><li>Size: Up to 4 meters</li><li>Diet: Fish</li><li>Habitat: Open ocean</li><li>Special: Very fast swimmer</li><li>Threats: Overfishing, illegal fishing</li></ul></div></div>
+
+<div class='card'><img src='images/whale.jpeg'><div class='content'><h2>Blue Whale</h2><ul><li>Size: Up to 30 meters</li><li>Diet: Krill</li><li>Habitat: Ocean</li><li>Special: Largest animal on Earth</li><li>Threats: Ship strikes, noise pollution</li></ul></div></div>
+
+<div class='card'><img src='images/bear.jpeg'><div class='content'><h2>Polar Bear</h2><ul><li>Size: Up to 3 meters</li><li>Diet: Seals</li><li>Habitat: Arctic</li><li>Special: Strong swimmer</li><li>Threats: Melting ice, climate change</li></ul></div></div>
+
+</div>
+<footer>Learn English and protect animals</footer>
+
+<script>
+const cards = document.querySelectorAll('.card');
+const backdrop = document.getElementById('cardBackdrop');
+
+cards.forEach(card => {
+  card.addEventListener('click', (e) => {
+    e.stopPropagation();
+    
+    if (card.classList.contains('zoomed')) {
+      closeZoom();
+    } else {
+      cards.forEach(c => c.classList.remove('zoomed'));
+      card.classList.add('zoomed');
+      backdrop.classList.add('active');
+    }
+  });
+});
+
+backdrop.addEventListener('click', closeZoom);
+
+function closeZoom() {
+  cards.forEach(c => c.classList.remove('zoomed'));
+  backdrop.classList.remove('active');
+}
+</script>
+</body>
+</html>
